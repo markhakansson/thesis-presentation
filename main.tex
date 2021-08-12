@@ -1,0 +1,94 @@
+\documentclass[10pt]{beamer}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tgadventor} % Main font to use over the whole presentation
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{mdframed}
+\usepackage{subcaption}
+\usepackage{csquotes}
+\usepackage{import}
+
+\def\shrug{\texttt{\raisebox{0.75em}{\char`\_}\char`\\\char`\_\kern-0.5ex(\kern-0.25ex\raisebox{0.25ex}{\rotatebox{45}{\raisebox{-.75ex}"\kern-1.5ex\rotatebox{-90})}}\kern-0.5ex)\kern-0.5ex\char`\_/\raisebox{0.75em}{\char`\_}}}
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+% -------------------------------------------------------
+% Beamer default theme overrides
+% -------------------------------------------------------
+{
+  \usetheme{default}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{structurebold}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+  
+  %% Fonts
+  \setbeamerfont{title}{size=\huge, series=\bfseries}
+  \setbeamerfont{block body}{family=\fontfamily{lmss}}
+  \setbeamerfont{block title}{family=\fontfamily{qag}}
+  \setbeamerfont{caption}{size=\footnotesize}
+  
+  %% Colors
+  %%% Title color
+  \setbeamercolor{title}{fg=white!70!gray!30!, bg=black}
+  %%% Regular text
+  \setbeamercolor{normal text}{fg=white, bg=cyan!8!black!92}
+  %%% Default background color (canvas)
+  \setbeamercolor{background canvas}{bg=cyan!5!black!95!}
+  %% Block
+  \setbeamercolor{block body}{bg=gray!10!black!90!}
+ 
+  %%% Top bar color (of each frame)
+  \setbeamercolor{structure}{bg=cyan!30!black!70}
+  %%% Structure color
+  \setbeamercolor{structure}{fg=white!100}
+  
+  %%% Page numbering
+  \setbeamertemplate{footline}[frame number]
+  
+  \setbeamercovered{transparent}
+} 
+
+\newenvironment{itemize-size}[1]
+    {\begin{itemize}
+    \setlength\itemsep{#1}}
+    {\end{itemize}}
+
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\SetMathAlphabet{\mathcal}{bold}{OMS}{cmsy}{b}{n}
+\newcommand{\bigO}{\mathcal{O}}
+
+\defbeamertemplate*{title page}{customized}[1][]
+{
+  \usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par
+  \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par
+  \bigskip
+  \usebeamerfont{author}\insertauthor\par
+  \usebeamerfont{institute}\insertinstitute\par
+  \usebeamerfont{date}\insertdate\par
+  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
+}
+
+\title[Thesis Presentation]{RAUK}
+\subtitle{Automatic Schedulability Analysis of RTIC Applications Using Symbolic Execution}
+\author{Mark Håkansson}
+\institute{
+    Supervisor: Prof. Per Lindgren \\
+    Luleå University of Technology}
+\date{\today}
+\logo{\includegraphics[height=1.5cm]{pictures/ltulogo.png}}
+
+\begin{document}
+
+% -------------------------------------------------------
+% Titlepage 
+% -------------------------------------------------------
+\import{pages/}{titlepage.tex}
+
+\end{document}
