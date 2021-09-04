@@ -27,13 +27,13 @@
   \usefonttheme{structurebold}  % or try serif, structurebold, ...
   \setbeamertemplate{navigation symbols}{}
   \setbeamertemplate{caption}[numbered]
-  
+
   %% Fonts
   \setbeamerfont{title}{size=\huge, series=\bfseries}
   \setbeamerfont{block body}{family=\fontfamily{lmss}}
   \setbeamerfont{block title}{family=\fontfamily{qag}}
   \setbeamerfont{caption}{size=\footnotesize}
-  
+
   %% Colors
   %%% Title color
   \setbeamercolor{title}{fg=white!70!gray!30!, bg=black}
@@ -43,26 +43,22 @@
   \setbeamercolor{background canvas}{bg=cyan!5!black!95!}
   %% Block
   \setbeamercolor{block body}{bg=gray!10!black!90!}
- 
+
   %%% Top bar color (of each frame)
   \setbeamercolor{structure}{bg=cyan!30!black!70}
   %%% Structure color
   \setbeamercolor{structure}{fg=white!100}
-  
+
   %%% Page numbering
   \setbeamertemplate{footline}[frame number]
-  
+
   \setbeamercovered{transparent}
-} 
+}
 
 \newenvironment{itemize-size}[1]
     {\begin{itemize}
     \setlength\itemsep{#1}}
     {\end{itemize}}
-
-\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
-\SetMathAlphabet{\mathcal}{bold}{OMS}{cmsy}{b}{n}
-\newcommand{\bigO}{\mathcal{O}}
 
 \defbeamertemplate*{title page}{customized}[1][]
 {
@@ -75,10 +71,25 @@
   \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
 }
 
-\title[Thesis Presentation]{RAUK}
-\subtitle{Automatic Schedulability Analysis of RTIC Applications Using Symbolic Execution}
-\author{Mark Håkansson}
+% Please fix a real titlepage and remove the ugly hspaces...
+\title[RAUK]{
+    \hspace{1cm} \\
+    \Huge RAUK}
+\subtitle{
+    Automatic Schedulability Analysis of RTIC Applications \\
+    Using Symbolic Execution}
+\author{
+    \hspace{1cm} \\
+    \hspace{1cm} \\
+    \hspace{1cm} \\
+    \hspace{1cm} \\
+    \hspace{1cm} \\
+    \hspace{1cm} \\
+    \hspace{1cm} \\
+    \hspace{1cm} \\
+    Presenter: Mark Håkansson}
 \institute{
+    \hspace{1cm} \\
     Supervisor: Prof. Per Lindgren \\
     Luleå University of Technology}
 \date{\today}
@@ -87,8 +98,23 @@
 \begin{document}
 
 % -------------------------------------------------------
-% Titlepage 
+% Titlepage
 % -------------------------------------------------------
 \import{pages/}{titlepage.tex}
+
+% -------------------------------------------------------
+% Outline/ToC
+% -------------------------------------------------------
+\import{pages/}{outline.tex}
+
+% -------------------------------------------------------
+% Introduction
+% -------------------------------------------------------
+\import{pages/}{intro.tex}
+
+% -------------------------------------------------------
+% Theory
+% -------------------------------------------------------
+\import{pages/}{theory.tex}
 
 \end{document}
