@@ -2,6 +2,7 @@
     \begin{itemize-size}{1em}
         \item \textbf{RTIC}
         \item \textbf{KLEE}
+        \item \textbf{Schedulability analysis}
     \end{itemize-size}
 \end{frame}
 
@@ -22,3 +23,52 @@
     \end{columns}
 \end{frame}
 
+\begin{frame}{KLEE - Symbolic Execution Engine}
+    \begin{columns}
+        \column{0.45\textwidth}
+        \begin{itemize-size}{1em}
+            \item \textbf{Symbolic instead of concrecte}
+            \begin{itemize-size}{1em}
+                \item E.g. fuzz testing works on concrete values 
+            \end{itemize-size}
+        \item \textbf{Explores paths in the program to find errors}
+        \item \textbf{Each path will generate a concrete test vector}
+        \item \textbf{Path explosion problem}
+        \end{itemize-size}
+
+        \column{0.55\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.35]{example-image-a}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{KLEE - Example}
+\lstinputlisting[
+    language={rust},
+]{../code/klee_function.rs}
+\end{frame}
+
+\begin{frame}{KLEE - Example}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[node distance=1.5cm]
+        \node (function) [orangerectangle] {function(input)};
+        \node (first) [draw, diamond, below of=function, aspect=2, yshift=-5mm] {$input < 2000$};
+        \node (complete_left) [redrectangle, below of=first, aspect=2, xshift=-2.5cm, fill=black!50!green!60] {complete};
+        \node (increment) [redrectangle, below of=first, xshift=2.5cm, fill=blue!30] {$input+ 1000$};
+        \node (1234) [draw, diamond, below of=increment, aspect=2] {$input == 1234$};
+        \node (panic) [redrectangle, below of=1234, aspect=2, xshift=2.5cm, fill=red!60] {panic};
+        \node (complete_right) [redrectangle, below of=1234, aspect=2, xshift=-2.5cm, fill=black!50!green!60] {complete};
+
+        \draw [arrow] (function) -- (first);
+        \draw [arrow] (first) -- node[xshift=-0.6cm]{false} (complete_left);
+        \draw [arrow] (first) -- node[xshift=0.6cm]{true} (increment);
+        \draw [arrow] (increment) -- (1234);
+        \draw [arrow] (1234) -- node[xshift=-0.6cm]{false} (complete_right);
+        \draw [arrow] (1234) -- node[xshift=0.6cm]{true} (panic);
+    \end{tikzpicture}
+    \caption{Simplified visual representation of KLEE running on previous function.}
+\end{figure}
+\end{frame}
