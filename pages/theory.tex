@@ -1,8 +1,8 @@
 \begin{frame}{Theory}
     \begin{itemize-size}{1em}
         \item \textbf{RTIC}
-        \item \textbf{KLEE}
-        \item \textbf{Schedulability analysis}
+        \item \textbf{Symbolic execution with KLEE}
+        \item \textbf{Schedulability analysis techniques}
     \end{itemize-size}
 \end{frame}
 
@@ -10,15 +10,19 @@
     \begin{columns}
         \column{0.45\textwidth}
         \begin{itemize-size}{1em}
-            \item \textbf{Framework to build real-time systems}
-            \item \textbf{Rust languange}
-            \item \textbf{Stack Resource Policy}
+            \item \textbf{Framework to build real-time systems in the Rust language}
+            \item \textbf{Tasks as a unit of execution}
+            \item \textbf{Fixed-priority preemptive scheduling}
+            \item \textbf{Minimal scheduling overhead}
+            \item \textbf{Memory sharing following the Stack Resource Policy}
+            \item \textbf{For ARM Cortex-M devices}
         \end{itemize-size}
 
         \column{0.55\textwidth}
         \begin{figure}
             \centering
             \includegraphics[scale=0.35]{pictures/RTIC.png}
+            \caption{The RTIC logo}
         \end{figure}
     \end{columns}
 \end{frame}
@@ -27,13 +31,14 @@
     \begin{columns}
         \column{0.45\textwidth}
         \begin{itemize-size}{1em}
-            \item \textbf{Symbolic instead of concrecte}
+            \item \textbf{A way to test programs}
+            \item \textbf{Symbolic instead of concrete}
             \begin{itemize-size}{1em}
                 \item E.g. fuzz testing works on concrete values 
             \end{itemize-size}
         \item \textbf{Explores paths in the program to find errors}
         \item \textbf{Each path will generate a concrete test vector}
-        \item \textbf{Path explosion problem}
+        \item \textbf{Path explosion problem!}
         \end{itemize-size}
 
         \column{0.55\textwidth}
@@ -71,4 +76,16 @@
     \end{tikzpicture}
     \caption{Simplified visual representation of KLEE running on previous function.}
 \end{figure}
+\end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    We say that a system is schedulable IFF
+
+    \begin{block}{Schedulability check}
+        \begin{enumerate}
+            \item All tasks in the system finish their execution before their deadlines.
+            \item The processor utilization (system load) never exceeds 100\% 
+        \end{enumerate}
+    \end{block}
+    
 \end{frame}
