@@ -80,12 +80,38 @@
 
 \begin{frame}{Schedulability analysis techniques}
     We say that a system is schedulable IFF
-
     \begin{block}{Schedulability check}
         \begin{enumerate}
             \item All tasks in the system finish their execution before their deadlines.
             \item The processor utilization (system load) never exceeds 100\% 
         \end{enumerate}
     \end{block}
+\end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    To determine \textbf{1.} we need to calculate the \textbf{Worst-case Response
+    Times (WCRT)} of the tasks in the system.
+
+    \vspace{1cm}
+
+    To calculate the WCRT we also need the \textbf{Worst-case Execution Times (WCET)} of
+    said tasks.
     
+\end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    WCET and WCRT definitions:
+    \vspace{1em}
+
+    \begin{block}{Worst-case Execution Time}
+        The maximum possible execution time of a task, without any
+        interruptions from e.g. higher priority tasks.
+    \end{block} 
+
+    \vspace{1em}
+
+    \begin{block}{Worst-case Response Time}
+        The maximum possible execution time of a task, with all
+        possible interruptions considered.
+    \end{block} 
 \end{frame}
