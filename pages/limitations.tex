@@ -1,0 +1,19 @@
+\begin{frame}{Limitations and problems}
+    \begin{itemize-size}{1em}
+            \item \textbf{Paths without side-effects will be optimized out}
+                \begin{itemize-size}{1em}
+                    \item Possible to trick the compiler to keep them
+                \end{itemize-size}
+            \item \textbf{WCET values are inflated due to RAUK overhead}
+                \begin{itemize-size}{1em}
+                    \item Possible solution:
+                \end{itemize-size}
+            \item \textbf{Maintaining RAUK is tricky...}
+                \begin{itemize-size}{1em}
+                    \item Forks of important libraries are used in RAUK
+                    \item Time consuming to keep up-to-date
+                    \item Solution: modularize the libraries used, such
+                    that only a small part can be maintained
+                \end{itemize-size}
+        \end{itemize-size}
+\end{frame}
