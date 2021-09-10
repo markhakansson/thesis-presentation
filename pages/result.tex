@@ -1,14 +1,17 @@
 \begin{frame}{Results}
-        
+    \begin{itemize-size}{1em}
+        \item \textbf{CLI tool that runs a schedulability analysis on an RTIC application}
+        \item \textbf{Very minimal changes to the source code needed}
+    \end{itemize-size}          
 \end{frame}
 
 \begin{frame}{Results}
-    \begin{block}{Test harness}
+    \begin{block}{Generate test vectors}
         \begin{itemize-size}{1em}
-            \item We build the application such that KLEE can run on it
-            \item IN THEORY: Generate test vectors targeting all possible
+            \item We build the RTIC application such that KLEE can run on it
+            \item \textbf{IN THEORY:} Generate test vectors targeting all possible
             execution paths on the user tasks
-            \item ASSUMPTION: At least one test vector generated for a task, should
+            \item \textbf{ASSUMPTION:} At least one test vector generated for a task, should
             result in the WCET of that task!
         \end{itemize-size}  
     \end{block}

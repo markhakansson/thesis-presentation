@@ -1,8 +1,22 @@
 \begin{frame}{Theory}
+    Quick crash courses in:
+    \vspace{1em}
     \begin{itemize-size}{1em}
-        \item \textbf{RTIC}
+        \item \textbf{Stack Resource Policy}
+        \item \textbf{The RTIC Framework}
         \item \textbf{Symbolic execution with KLEE}
         \item \textbf{Schedulability analysis techniques}
+    \end{itemize-size}
+\end{frame}
+
+\begin{frame}{Stack Resource Policy}
+    \begin{itemize-size}{1em}
+        \item \textbf{Defines a way for sharing resources in a real-time system}
+        \item \textbf{Prevents deadlocks}
+        \item \textbf{Task as a unit of execution}
+        \item \textbf{A task can only be blocked once during its execution}
+        \item \textbf{Tasks share a single stack - very memory efficient}
+        \item \textbf{Works with both fixed and dynamic priorities}
     \end{itemize-size}
 \end{frame}
 
@@ -11,11 +25,36 @@
         \column{0.45\textwidth}
         \begin{itemize-size}{1em}
             \item \textbf{Framework to build real-time systems in the Rust language}
-            \item \textbf{Tasks as a unit of execution}
+            \item \textbf{For ARM Cortex-M devices}
             \item \textbf{Fixed-priority preemptive scheduling}
             \item \textbf{Minimal scheduling overhead}
             \item \textbf{Memory sharing following the Stack Resource Policy}
-            \item \textbf{For ARM Cortex-M devices}
+        \end{itemize-size}
+
+        \column{0.55\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.35]{pictures/RTIC.png}
+            \caption{The RTIC logo}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{The RTIC Framework}
+    \begin{columns}
+        \column{0.45\textwidth}
+        \begin{itemize-size}{1em}
+            \item \textbf{The user defines:}
+            \begin{itemize-size}{1em}
+                \item Initialization function
+                \item User tasks
+                \item Idle function
+            \end{itemize-size}
+            \item \textbf{When building the application:}
+            \begin{itemize-size}{1em}
+                \item Expand application with support code
+                and extra details
+            \end{itemize-size}
         \end{itemize-size}
 
         \column{0.55\textwidth}
@@ -34,7 +73,7 @@
             \item \textbf{A way to test programs}
             \item \textbf{Symbolic instead of concrete}
             \begin{itemize-size}{1em}
-                \item E.g. fuzz testing works on concrete values 
+                \item E.g. fuzz testing works on concrete values
             \end{itemize-size}
         \item \textbf{Explores paths in the program to find errors}
         \item \textbf{Each path will generate a concrete test vector}
@@ -83,7 +122,7 @@
     \begin{block}{Schedulability check}
         \begin{enumerate}
             \item All tasks in the system finish their execution before their deadlines.
-            \item The processor utilization (system load) never exceeds 100\% 
+            \item The processor utilization (system load) never exceeds 100\%
         \end{enumerate}
     \end{block}
 \end{frame}
@@ -96,7 +135,7 @@
 
     To calculate the WCRT we also need the \textbf{Worst-case Execution Times (WCET)} of
     said tasks.
-    
+
 \end{frame}
 
 \begin{frame}{Schedulability analysis techniques}
@@ -106,12 +145,12 @@
     \begin{block}{Worst-case Execution Time}
         The maximum possible execution time of a task, without any
         interruptions from e.g. higher priority tasks.
-    \end{block} 
+    \end{block}
 
     \vspace{1em}
 
     \begin{block}{Worst-case Response Time}
         The maximum possible execution time of a task, with all
         possible interruptions considered.
-    \end{block} 
+    \end{block}
 \end{frame}
