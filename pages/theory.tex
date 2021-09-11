@@ -47,7 +47,7 @@
             \item \textbf{The user defines:}
             \begin{itemize-size}{1em}
                 \item Initialization function
-                \item User tasks
+                \item \emph{User tasks}
                 \item Idle function
             \end{itemize-size}
             \item \textbf{When building the application:}
@@ -118,23 +118,36 @@
 \end{frame}
 
 \begin{frame}{Schedulability analysis techniques}
-    We say that a system is schedulable IFF
+    We say that a real-time system is schedulable IFF
     \begin{block}{Schedulability check}
         \begin{enumerate}
             \item All tasks in the system finish their execution before their deadlines.
+            \begin{itemize}
+                \item "Worst-case response time (WCRT) $\leq$ deadline"
+            \end{itemize}
             \item The processor utilization (system load) never exceeds 100\%
         \end{enumerate}
     \end{block}
+    Should a task not meet their deadline or the system load is 100\% at any point
+    in time - we deem the system to be unstable and unschedulable!
 \end{frame}
 
 \begin{frame}{Schedulability analysis techniques}
-    To determine \textbf{1.} we need to calculate the \textbf{Worst-case Response
-    Times (WCRT)} of the tasks in the system.
-
-    \vspace{1cm}
-
-    To calculate the WCRT we also need the \textbf{Worst-case Execution Times (WCET)} of
-    said tasks.
+    For each task $\tau_i$ we require the following information:
+    \begin{block}{Prerequisities}
+        \begin{itemize-size}{1em}
+            \item \textbf{The relative deadline,} $D_i$
+            \item \textbf{The priority,} $P_i$
+            \item \textbf{Period/inter-arrival time,} $T_i$
+            \item \textbf{Blocking time,} $B_i$
+            \begin{itemize}
+                \item Longest time $\tau_i$ will be blocked from
+                accessing a shared resource by a lower priority
+                task
+            \end{itemize}
+            \item \textbf{Worst-case Execution Time (WCET),} $C_i$
+        \end{itemize-size} 
+    \end{block}
 
 \end{frame}
 
@@ -154,3 +167,16 @@
         possible interruptions considered.
     \end{block}
 \end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    The \textbf{worst-case response time (WCRT)} $R_i$ of a \textbf{task} can be calculated with
+    the following recurrence equation
+    \begin{equation}
+        \begin{cases}
+            R_{i}(0) &= C_i + B_i \\
+            R_{i}(s) &= C_i + B_i + \sum\limits_{h: P_h > P_i} \left\lceil \frac{R_{i}(s-1)}{T_h} \right\rceil.
+        \end{cases}
+    \end{equation}
+    \textbf{Source:} \emph{Hard Real-time Computing Systems} by Giorgio Buttazzo.
+\end{frame}
+

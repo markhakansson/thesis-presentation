@@ -1,11 +1,14 @@
-\begin{frame}{Results}
+\begin{frame}{Implementation}
+    In order to run a schedulability analysis on the RTIC application,
+    RAUK needs to do the following
     \begin{itemize-size}{1em}
-        \item \textbf{CLI tool that runs a schedulability analysis on an RTIC application}
-        \item \textbf{Very minimal changes to the source code needed}
-    \end{itemize-size}          
+        \item Measure the WCET of all tasks
+        \item Record a trace of the tasks in order to
+        calculate the blocking time
+    \end{itemize-size}     
 \end{frame}
 
-\begin{frame}{Results}
+\begin{frame}{Implementation}
     \begin{block}{Generate test vectors}
         \begin{itemize-size}{1em}
             \item We build the RTIC application such that KLEE can run on it
@@ -17,11 +20,29 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{Results}
-    \begin{block}{Replay harness}
+\begin{frame}{Implementation}
+    \begin{block}{Replay the test vectors}
         \begin{itemize-size}{1em}
             \item Build the application such that we can test it on the target hardware
-            \item Each test vector will be 
+            \item Each test vector will be executed on the target hardware, by overwriting
+            memory addresses and registers as necessary
+            \item A trace of each test vector will be recorded
+            \begin{itemize-size}{1em}
+                \item Records when a task starts/ends
+                \item Records when a task claims/releases a resource
+            \end{itemize-size}
+        \end{itemize-size}  
+    \end{block}
+\end{frame}
+
+\begin{frame}{Implementation}
+    \begin{block}{Schedulability analysis}
+        After recording the traces RAUK can
+        \begin{itemize-size}{1em}
+            \item Calculate the WCET for each trace
+            \item Determine blocking times on all tasks
+            \item Calculate WCRT for each trace
+            \item Determine wheter the system is schedulable or not
         \end{itemize-size}  
     \end{block}
 \end{frame}
