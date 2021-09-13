@@ -1,6 +1,7 @@
 \begin{frame}{Implementation}
     In order to run a schedulability analysis on the RTIC application,
     RAUK needs to do the following
+    \vspace{1em}
     \begin{itemize-size}{1em}
         \item Measure the WCET of all tasks
         \item Record a trace of the tasks in order to
@@ -28,8 +29,10 @@
             memory addresses and registers as necessary
             \item A trace of each test vector will be recorded using breakpoints
             \begin{itemize-size}{1em}
+                \vspace{0.5em}
                 \item Records when a task starts/ends
                 \item Records when a task claims/releases a resource
+                \item The current clock cycle will be part of each record
             \end{itemize-size}
         \end{itemize-size}  
     \end{block}
@@ -39,10 +42,36 @@
     \begin{block}{Schedulability analysis}
         After recording the traces RAUK can
         \begin{itemize-size}{1em}
+            \vspace{0.5em}
             \item Calculate the WCET for each trace
             \item Determine blocking times on all tasks using the traces
             \item Calculate WCRT for each trace
             \item Determine wheter the system is schedulable or not
         \end{itemize-size}  
+    \end{block}
+\end{frame}
+
+\begin{frame}{Result}
+    \begin{block}{Test setup}
+        \begin{itemize-size}{1em}
+            \item RTIC blinky application with a button to interrupt the LED
+            \item Tested on an STM32 development board
+            \item Deadline and period/inter-arrival time for each
+            task given
+            \item Tested with and without compiler optimizations
+        \end{itemize-size}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Result}
+    \begin{block}{Results}
+        \begin{itemize-size}{1em}
+            \item RAUK can successfully test, measure and
+            run a schedulability analysis check without compiler optimizations
+            \item RAUK has some limitations when running with compiler optimizations
+            enabled
+            \item RAUK adds some overhead to each trace measured with and without
+            optimizations
+        \end{itemize-size}
     \end{block}
 \end{frame}

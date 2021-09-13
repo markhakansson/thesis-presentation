@@ -21,7 +21,21 @@
 \end{frame}
 
 \begin{frame}{Schedulability analysis techniques}
+    What is scheduling?
+    \vspace{1em}
+    \begin{itemize-size}{1em}
+        \item \textbf{Scheduling} - the act of assigning system
+        resources to the tasks following some criteria
+    \item \textbf{Scheduler} - the system responsible for
+        scheduling tasks
+    \item \textbf{Schedulability analysis} - verifying that the tasks
+        adhere to the scheduling policy
+    \end{itemize-size}
+\end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
     We say that a real-time system is schedulable IFF
+    \vspace{1em}
     \begin{block}{Schedulability check}
         \begin{enumerate}
             \item All tasks in the system finish their execution before their deadlines.
@@ -37,6 +51,7 @@
 \begin{frame}{Schedulability anaysis techniques}
     \begin{block}{Answer}
         To do so we need to determine the following for all user tasks:
+        \vspace{0.5em}
         \begin{enumerate}
             \item The worst-case execution time (WCET)
             \item The worst-case response time (WCRT)
@@ -47,7 +62,7 @@
 \end{frame}
 
 \begin{frame}{Schedulability analysis techniques}
-    WCET and WCRT definitions:
+    What is the difference between WCET and WCRT?
     \vspace{1em}
 
     \begin{block}{Worst-case Execution Time}
@@ -64,7 +79,6 @@
 \end{frame}
 
 \begin{frame}{Schedulability analysis techniques}
-    Blocking time defintion:
     \begin{block}{Blocking time}
         Longest time a \emph{higher priority task} can be blocked from accessing a
         shared resource by a \emph{lower priority task}
@@ -76,13 +90,15 @@
         \begin{itemize-size}{1em}
             \item To check if deadlines are met
             \begin{itemize-size}{1em}
+                \vspace{0.5em}
                 \item Check if WCRT finishes before the deadline
                 \item "In the worst case, will the task respond before its deadline?"
             \end{itemize-size}
             \item To check if system is not overloaded
             \begin{itemize-size}{1em}
-                \item Assume all tasks arrive at a periodic time 
-                \item Assume all tasks execution time is the WCET
+                \vspace{0.5em}
+                \item Assume all tasks arrive at a certain inter-arrival time (interval) 
+                \item Assume all tasks' execution time is their WCET
                 \item Check the worst-case load for each task
                 \item Add them together and make sure it does not exceed 100\%
             \end{itemize-size}
@@ -193,7 +209,7 @@
         \column{0.55\textwidth}
         \begin{figure}
             \centering
-            \includegraphics[scale=0.35]{example-image-a}
+            \includegraphics[scale=0.55]{pictures/klee.png}
         \end{figure}
     \end{columns}
 \end{frame}
