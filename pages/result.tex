@@ -1,6 +1,6 @@
 \begin{frame}{Implementation}
     In order to run a schedulability analysis on the RTIC application,
-    RAUK needs to do the following
+    RAUK needs to fetch the following additional information
     \vspace{1em}
     \begin{itemize-size}{1em}
         \item Measure the WCET of all tasks
@@ -14,7 +14,8 @@
         \begin{itemize-size}{1em}
             \item We build the RTIC application such that KLEE can run on it
             \item \textbf{IN THEORY:} We can generate test vectors targeting all possible
-            execution paths on the user tasks using KLEE
+            execution paths on the user tasks. By setting the resources used by a task
+            are set as symbolic values and run KLEE.
             \item \textbf{ASSUMPTION:} At least one test vector generated for a task, should
             result in the WCET of that task!
         \end{itemize-size}  
@@ -27,16 +28,31 @@
             \item Build the application such that we can test it on the target hardware
             \item Each test vector will be executed on the target hardware, by overwriting
             memory addresses and registers as necessary
-            \item A trace of each test vector will be recorded using breakpoints
+            \item Set breakpoints at:
             \begin{itemize-size}{1em}
                 \vspace{0.5em}
-                \item Records when a task starts/ends
-                \item Records when a task claims/releases a resource
-                \item The current clock cycle will be part of each record
+                \item When a task starts/ends
+                \item When a task claims/releases a resource
             \end{itemize-size}
         \end{itemize-size}  
     \end{block}
 \end{frame}
+
+\begin{frame}{Implementation}
+    \begin{block}{Replay the test vectors (contd.)}
+        \begin{itemize-size}{1em}
+            \item For each test vector, when hitting a breakpoint we record
+            \begin{itemize-size}{1em}
+                \item Current clock cycle
+                \item What task is starting/ending or
+                \item Which resource is claimed or released
+            \end{itemize-size}
+            \item Finally we end up with a trace for that test vector
+            \item Repeat until all test vectors have been executed
+        \end{itemize-size}  
+    \end{block}
+\end{frame}
+
 
 \begin{frame}{Implementation}
     \begin{block}{Schedulability analysis}

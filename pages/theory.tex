@@ -20,18 +20,6 @@
     \end{itemize-size}
 \end{frame}
 
-\begin{frame}{Schedulability analysis techniques}
-    What is scheduling?
-    \vspace{1em}
-    \begin{itemize-size}{1em}
-        \item \textbf{Scheduling} - the act of assigning system
-        resources to the tasks following some criteria
-    \item \textbf{Scheduler} - the system responsible for
-        scheduling tasks
-    \item \textbf{Schedulability analysis} - verifying that the tasks
-        adhere to the scheduling policy
-    \end{itemize-size}
-\end{frame}
 
 \begin{frame}{Schedulability analysis techniques}
     We say that a real-time system is schedulable IFF
@@ -46,19 +34,54 @@
 
 \begin{frame}{Schedulability anaysis techniques}
     \textbf{Question:} how to determine if the system adheres to \textbf{1.} and \textbf{2.}?
+
 \end{frame}
 
-\begin{frame}{Schedulability anaysis techniques}
+\begin{frame}{Schedulability analysis techniques}
     \begin{block}{Answer}
-        To do so we need to determine the following for all user tasks:
-        \vspace{0.5em}
-        \begin{enumerate}
-            \item The worst-case execution time (WCET)
-            \item The worst-case response time (WCRT)
-            \item The potential blocking time
-        \end{enumerate}
-        
+        \begin{itemize-size}{1em}
+            \item To check if deadlines are met
+            \begin{itemize-size}{1em}
+                \vspace{0.5em}
+                \item Check if \textbf{worst-case response time} finishes before the deadline
+                \item "In the worst case, will the task respond before its deadline?"
+            \end{itemize-size}
+            \item To check if system is not overloaded
+            \begin{itemize-size}{1em}
+                \vspace{0.5em}
+                \item Determine the worst-case load each task has on the system
+                \item Add them together and make sure it does not exceed 100\%
+            \end{itemize-size}
+        \end{itemize-size} 
     \end{block}
+\end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    The \textbf{worst-case response time (WCRT)} $R_i$ of a \textbf{task} can be calculated with
+    the following recurrence equation:
+    \begin{equation}
+        \begin{cases}
+            R_{i}(0) &= C_i + B_i \\
+            R_{i}(s) &= C_i + B_i + \sum\limits_{h: P_h > P_i} \left\lceil \frac{R_{i}(s-1)}{T_h} \right\rceil.
+        \end{cases}
+    \end{equation}
+    Where $C_i$ is the \emph{worst-case execution time} and $B_i$ the
+    \emph{blocking time} on the task.
+    \vspace{1em}
+
+    \textbf{Source:} \emph{Hard Real-time Computing Systems} by Giorgio Buttazzo.
+\end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    The \textbf{worst-case system load} of the system can be calculated as:
+    \begin{equation}
+        \rho = \sum^{n}_{i=1} \frac{C_i}{T_i}
+    \end{equation}
+    Where $C_i$ is the \emph{worst-case execution time} and $T_i$ the
+    \emph{period/inter-arrival} of the task.
+    \vspace{1em}
+
+    \textbf{Source:} \emph{Hard Real-time Computing Systems} by Giorgio Buttazzo.
 \end{frame}
 
 \begin{frame}{Schedulability analysis techniques}
@@ -85,43 +108,7 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{Schedulability analysis techniques}
-    \begin{block}{Simplified schedulability check}
-        \begin{itemize-size}{1em}
-            \item To check if deadlines are met
-            \begin{itemize-size}{1em}
-                \vspace{0.5em}
-                \item Check if WCRT finishes before the deadline
-                \item "In the worst case, will the task respond before its deadline?"
-            \end{itemize-size}
-            \item To check if system is not overloaded
-            \begin{itemize-size}{1em}
-                \vspace{0.5em}
-                \item Assume all tasks arrive at a certain inter-arrival time (interval) 
-                \item Assume all tasks' execution time is their WCET
-                \item Check the worst-case load for each task
-                \item Add them together and make sure it does not exceed 100\%
-            \end{itemize-size}
-        \end{itemize-size} 
-    \end{block}
-\end{frame}
 
-\begin{frame}{Schedulability analysis techniques}
-    The \textbf{worst-case response time (WCRT)} $R_i$ of a \textbf{task} can be calculated with
-    the following recurrence equation:
-    \begin{equation}
-        \begin{cases}
-            R_{i}(0) &= C_i + B_i \\
-            R_{i}(s) &= C_i + B_i + \sum\limits_{h: P_h > P_i} \left\lceil \frac{R_{i}(s-1)}{T_h} \right\rceil.
-        \end{cases}
-    \end{equation}
-    The \textbf{worst-case system load} of the system can be calculated as:
-    \begin{equation}
-        \rho = \sum^{n}_{i=1} \frac{C_i}{T_i}
-    \end{equation}
-
-    \textbf{Source:} \emph{Hard Real-time Computing Systems} by Giorgio Buttazzo.
-\end{frame}
 
 
 \begin{frame}{The RTIC Framework}

@@ -1,11 +1,26 @@
+\begin{frame}{Schedulability?}
+    What is scheduling?
+    \vspace{1em}
+    \begin{itemize-size}{1em}
+        \item \textbf{Scheduling} - the act of assigning system
+        resources to the tasks following some criteria
+    \item \textbf{Scheduler} - the system responsible for
+        scheduling tasks
+    \item \textbf{Schedulability analysis} - verifying that the tasks
+        adhere to the scheduling policy
+    \end{itemize-size}
+\end{frame}
+
 \begin{frame}{What is RAUK}
     \begin{columns}
         \column{0.45\textwidth}
         \begin{itemize-size}{1em}
             \item \textbf{Schedulability analysis tool}
             \item \textbf{For RTIC applications}
-            \item \textbf{Test all execution paths using symbolic execution}
-            \item \textbf{Executes and measures tests on target hardware}
+            \item \textbf{Uses KLEE (symbolic execution) to generate tests for
+                all possible execution paths}
+            \item \textbf{Executes and measures the tests on target hardware}
+            \item \textbf{Determine whether the system is schedulable}
         \end{itemize-size}
 
         \column{0.55\textwidth}
