@@ -12,8 +12,8 @@
     \begin{block}{Generate test vectors}
         \begin{itemize-size}{1em}
             \item We build the RTIC application such that KLEE can run on it
-            \item \textbf{IN THEORY:} Generate test vectors targeting all possible
-            execution paths on the user tasks
+            \item \textbf{IN THEORY:} We can generate test vectors targeting all possible
+            execution paths on the user tasks using KLEE
             \item \textbf{ASSUMPTION:} At least one test vector generated for a task, should
             result in the WCET of that task!
         \end{itemize-size}  
@@ -26,7 +26,7 @@
             \item Build the application such that we can test it on the target hardware
             \item Each test vector will be executed on the target hardware, by overwriting
             memory addresses and registers as necessary
-            \item A trace of each test vector will be recorded
+            \item A trace of each test vector will be recorded using breakpoints
             \begin{itemize-size}{1em}
                 \item Records when a task starts/ends
                 \item Records when a task claims/releases a resource
@@ -40,7 +40,7 @@
         After recording the traces RAUK can
         \begin{itemize-size}{1em}
             \item Calculate the WCET for each trace
-            \item Determine blocking times on all tasks
+            \item Determine blocking times on all tasks using the traces
             \item Calculate WCRT for each trace
             \item Determine wheter the system is schedulable or not
         \end{itemize-size}  

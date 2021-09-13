@@ -3,22 +3,110 @@
     \vspace{1em}
     \begin{itemize-size}{1em}
         \item \textbf{Stack Resource Policy}
+        \item \textbf{Schedulability analysis techniques}
         \item \textbf{The RTIC Framework}
         \item \textbf{Symbolic execution with KLEE}
-        \item \textbf{Schedulability analysis techniques}
     \end{itemize-size}
 \end{frame}
 
 \begin{frame}{Stack Resource Policy}
     \begin{itemize-size}{1em}
-        \item \textbf{Defines a way for sharing resources in a real-time system}
+        \item Defines a way for \textbf{sharing resources} in a real-time system
         \item \textbf{Prevents deadlocks}
-        \item \textbf{Task as a unit of execution}
-        \item \textbf{A task can only be blocked once during its execution}
-        \item \textbf{Tasks share a single stack - very memory efficient}
-        \item \textbf{Works with both fixed and dynamic priorities}
+        \item \textbf{Task} as a \emph{unit of execution}
+        \item A task can \textbf{only be blocked once} during its execution
+        \item Tasks share a \textbf{single stack} - \emph{very memory efficient}
+        \item Works with both \textbf{fixed} and dynamic priorities
     \end{itemize-size}
 \end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    We say that a real-time system is schedulable IFF
+    \begin{block}{Schedulability check}
+        \begin{enumerate}
+            \item All tasks in the system finish their execution before their deadlines.
+            \item The processor utilization (system load) never exceeds 100\%
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Schedulability anaysis techniques}
+    \textbf{Question:} how to determine if the system adheres to \textbf{1.} and \textbf{2.}?
+\end{frame}
+
+\begin{frame}{Schedulability anaysis techniques}
+    \begin{block}{Answer}
+        To do so we need to determine the following for all user tasks:
+        \begin{enumerate}
+            \item The worst-case execution time (WCET)
+            \item The worst-case response time (WCRT)
+            \item The potential blocking time
+        \end{enumerate}
+        
+    \end{block}
+\end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    WCET and WCRT definitions:
+    \vspace{1em}
+
+    \begin{block}{Worst-case Execution Time}
+        The maximum possible execution time of a task, without any
+        interruptions from e.g. higher priority tasks.
+    \end{block}
+
+    \vspace{1em}
+
+    \begin{block}{Worst-case Response Time}
+        The maximum possible execution time of a task, with all
+        possible interruptions such as blocking time considered.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    Blocking time defintion:
+    \begin{block}{Blocking time}
+        Longest time a \emph{higher priority task} can be blocked from accessing a
+        shared resource by a \emph{lower priority task}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    \begin{block}{Simplified schedulability check}
+        \begin{itemize-size}{1em}
+            \item To check if deadlines are met
+            \begin{itemize-size}{1em}
+                \item Check if WCRT finishes before the deadline
+                \item "In the worst case, will the task respond before its deadline?"
+            \end{itemize-size}
+            \item To check if system is not overloaded
+            \begin{itemize-size}{1em}
+                \item Assume all tasks arrive at a periodic time 
+                \item Assume all tasks execution time is the WCET
+                \item Check the worst-case load for each task
+                \item Add them together and make sure it does not exceed 100\%
+            \end{itemize-size}
+        \end{itemize-size} 
+    \end{block}
+\end{frame}
+
+\begin{frame}{Schedulability analysis techniques}
+    The \textbf{worst-case response time (WCRT)} $R_i$ of a \textbf{task} can be calculated with
+    the following recurrence equation:
+    \begin{equation}
+        \begin{cases}
+            R_{i}(0) &= C_i + B_i \\
+            R_{i}(s) &= C_i + B_i + \sum\limits_{h: P_h > P_i} \left\lceil \frac{R_{i}(s-1)}{T_h} \right\rceil.
+        \end{cases}
+    \end{equation}
+    The \textbf{worst-case system load} of the system can be calculated as:
+    \begin{equation}
+        \rho = \sum^{n}_{i=1} \frac{C_i}{T_i}
+    \end{equation}
+
+    \textbf{Source:} \emph{Hard Real-time Computing Systems} by Giorgio Buttazzo.
+\end{frame}
+
 
 \begin{frame}{The RTIC Framework}
     \begin{columns}
@@ -39,6 +127,28 @@
         \end{figure}
     \end{columns}
 \end{frame}
+
+\begin{frame}{The RTIC Framework}
+    \begin{columns}
+        \column{0.45\textwidth}
+        \begin{itemize-size}{1em}
+            \item Framework to build real-time systems in the Rust language
+            \item For ARM Cortex-M devices
+            \item \textbf{\textcolor{green!70}{Fixed-priority preemptive scheduling}}
+            \item Minimal scheduling overhead
+            \item \textbf{\textcolor{green!70}{Memory sharing following the
+                Stack Resource Policy}}
+        \end{itemize-size}
+
+        \column{0.55\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.35]{pictures/RTIC.png}
+            \caption{The RTIC logo}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
 
 \begin{frame}{The RTIC Framework}
     \begin{columns}
@@ -115,68 +225,5 @@
     \end{tikzpicture}
     \caption{Simplified visual representation of KLEE running on previous function.}
 \end{figure}
-\end{frame}
-
-\begin{frame}{Schedulability analysis techniques}
-    We say that a real-time system is schedulable IFF
-    \begin{block}{Schedulability check}
-        \begin{enumerate}
-            \item All tasks in the system finish their execution before their deadlines.
-            \begin{itemize}
-                \item "Worst-case response time (WCRT) $\leq$ deadline"
-            \end{itemize}
-            \item The processor utilization (system load) never exceeds 100\%
-        \end{enumerate}
-    \end{block}
-    Should a task not meet their deadline or the system load is 100\% at any point
-    in time - we deem the system to be unstable and unschedulable!
-\end{frame}
-
-\begin{frame}{Schedulability analysis techniques}
-    For each task $\tau_i$ we require the following information:
-    \begin{block}{Prerequisities}
-        \begin{itemize-size}{1em}
-            \item \textbf{The relative deadline,} $D_i$
-            \item \textbf{The priority,} $P_i$
-            \item \textbf{Period/inter-arrival time,} $T_i$
-            \item \textbf{Blocking time,} $B_i$
-            \begin{itemize}
-                \item Longest time $\tau_i$ will be blocked from
-                accessing a shared resource by a lower priority
-                task
-            \end{itemize}
-            \item \textbf{Worst-case Execution Time (WCET),} $C_i$
-        \end{itemize-size} 
-    \end{block}
-
-\end{frame}
-
-\begin{frame}{Schedulability analysis techniques}
-    WCET and WCRT definitions:
-    \vspace{1em}
-
-    \begin{block}{Worst-case Execution Time}
-        The maximum possible execution time of a task, without any
-        interruptions from e.g. higher priority tasks.
-    \end{block}
-
-    \vspace{1em}
-
-    \begin{block}{Worst-case Response Time}
-        The maximum possible execution time of a task, with all
-        possible interruptions considered.
-    \end{block}
-\end{frame}
-
-\begin{frame}{Schedulability analysis techniques}
-    The \textbf{worst-case response time (WCRT)} $R_i$ of a \textbf{task} can be calculated with
-    the following recurrence equation
-    \begin{equation}
-        \begin{cases}
-            R_{i}(0) &= C_i + B_i \\
-            R_{i}(s) &= C_i + B_i + \sum\limits_{h: P_h > P_i} \left\lceil \frac{R_{i}(s-1)}{T_h} \right\rceil.
-        \end{cases}
-    \end{equation}
-    \textbf{Source:} \emph{Hard Real-time Computing Systems} by Giorgio Buttazzo.
 \end{frame}
 
