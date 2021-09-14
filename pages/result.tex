@@ -3,13 +3,19 @@
     RAUK needs to fetch the following additional information
     \vspace{1em}
     \begin{itemize-size}{1em}
-        \item Measure the WCET of all tasks
-        \item Record a trace of the tasks in order to
-        calculate the blocking time
+        \item \textbf{Determine the \emph{WCET} of all tasks}
+        \item \textbf{Determine the \emph{blocking time} of all tasks}
+        \item \textbf{The \emph{deadline} and \emph{period/inter-arrival} of all tasks}
+        \vspace{0.5em}
+            \begin{itemize-size}{1em}
+            \item Given by the user 
+        \end{itemize-size}
     \end{itemize-size}     
 \end{frame}
 
 \begin{frame}{Implementation - Execution flow}
+    RAUK does the following in order:
+    \vspace{0.5em}
     \begin{itemize-size}{1em}
         \item Generate test vectors
         \item Replay and measure test vectors on hardware
@@ -80,29 +86,49 @@
 \end{frame}
 
 
-\begin{frame}{Implementation}
-    \begin{block}{Schedulability analysis}
-        After recording the traces RAUK can
-        \begin{itemize-size}{1em}
-            \vspace{0.5em}
-            \item Calculate the WCET for each trace
-            \item Determine blocking times on all tasks using the traces
-            \item Calculate WCRT for each trace
-            \item Determine wheter the system is schedulable or not
-        \end{itemize-size}  
-    \end{block}
+\begin{frame}{Implementation - Schedulability analysis}
+    \begin{columns}
+        \column{0.7\textwidth} 
+        \begin{block}{Schedulability analysis}
+            After collecting all the test vector traces RAUK can
+            \begin{itemize-size}{1em}
+                \item Calculate the WCET for each trace
+                \item Determine blocking times on all tasks using the traces
+                \item Calculate WCRT for each trace
+                \item Determine wheter the system is schedulable or not
+            \end{itemize-size}  
+        \end{block}
+
+        \column{0.3\textwidth} 
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.15]{pictures/schedule.png}
+        \end{figure}
+    \end{columns}
+
+
 \end{frame}
 
 \begin{frame}{Result}
-    \begin{block}{Test setup}
-        \begin{itemize-size}{1em}
-            \item RTIC blinky application with a button to interrupt the LED
-            \item Tested on an STM32 development board
-            \item Deadline and period/inter-arrival time for each
-            task given
-            \item Tested with and without compiler optimizations
-        \end{itemize-size}
-    \end{block}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \begin{block}{Test setup}
+            \begin{itemize-size}{1em}
+                \item RTIC blinky application with a button to interrupt the LED
+                \item Tested on an STM32 development board
+                \item Deadline and period/inter-arrival time for each
+                task given
+                \item Tested with and without compiler optimizations
+            \end{itemize-size}
+        \end{block}
+
+        \column{0.4\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[scale=1.5]{pictures/stm32.jpg}
+            \caption*{STM32 Nucleo-64 Board}
+        \end{figure}
+    \end{columns}
 \end{frame}
 
 \begin{frame}{Result}
@@ -110,11 +136,14 @@
         \begin{itemize-size}{1em}
             \item RAUK can successfully test, measure and
             run a schedulability analysis check without compiler optimizations
-            \item RAUK has some limitations when running with compiler optimizations
-            enabled
-            \item Result compared with manual tracing of the test vectors
-            \item RAUK adds some overhead to each measurement with and without
-            optimizations
+            \item Some \emph{limitations} when running \emph{with compiler
+            optimizations}
+        \end{itemize-size}
+        \vspace{0.5em}
+        Result compared with manual tracing of the test vectors:
+        \begin{itemize-size}{1em}
+        \vspace{0.5em}
+            \item RAUK adds \textbf{some overhead} to each \textbf{measurement}
         \end{itemize-size}
     \end{block}
 \end{frame}
