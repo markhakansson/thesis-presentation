@@ -1,17 +1,40 @@
+\begin{frame}{Schedulability?}
+    What is scheduling?
+    \vspace{1em}
+    \begin{itemize-size}{1em}
+        \item \textbf{Task} - unit of execution, with priority and deadline etc.
+        \item \textbf{Scheduling} - the act of assigning system
+        resources to the tasks following some criteria/policy
+    \item \textbf{Scheduler} - the system responsible for
+        scheduling tasks
+    \item \textbf{Schedulability analysis} - verifying that the tasks
+        adhere to the scheduling policy
+    \end{itemize-size}
+\end{frame}
+
 \begin{frame}{Problem}
-    \begin{block}{Problems today}
-        \begin{itemize-size}{1em}
-            \item \textbf{Available schedulability tools are too cumbersome}
-                \begin{itemize-size}{1em}
-                    \item Requires a separate model of the whole system
-                \end{itemize-size}
-            \item \textbf{No extensive verification and testing tools for RTIC or Embedded Rust}
-                \begin{itemize-size}{1em}
-                    \item Generally a requirement for safety-critical systems
-                    \item Useful for the open-source community as well!
-                \end{itemize-size}
-        \end{itemize-size}
-    \end{block}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{block}{Problems today}
+            \begin{itemize-size}{1em}
+                \item \textbf{Available schedulability tools are too cumbersome}
+                    \begin{itemize-size}{1em}
+                        \item Model of the system required
+                    \end{itemize-size}
+                \item \textbf{No extensive verification and testing tools for RTIC or Embedded Rust}
+                    \begin{itemize-size}{1em}
+                        \item Requirement for safety-critical systems
+                        \item Useful for the open-source community as well!
+                    \end{itemize-size}
+            \end{itemize-size}
+        \end{block}
+
+        \column{0.5\textwidth}
+        \begin{figure}
+           \centering
+            \includegraphics[scale=0.2]{pictures/problem.png}
+        \end{figure}
+    \end{columns}
 \end{frame}
 
 \begin{frame}{Goals}
@@ -21,6 +44,7 @@
                 \vspace{0.5em}
                 \begin{itemize-size}{1em}
                     \item "One-click solution" 
+                    \item Delimitation: support a subset of all RTIC features
                 \end{itemize-size}
             \item \textbf{Very minimal changes to the source code required}
         \end{itemize-size}          

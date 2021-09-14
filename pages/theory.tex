@@ -10,14 +10,23 @@
 \end{frame}
 
 \begin{frame}{Stack Resource Policy}
-    \begin{itemize-size}{1em}
-        \item Defines a way for \textbf{sharing resources} in a real-time system
-        \item \textbf{Prevents deadlocks}
-        \item \textbf{Task} as a \emph{unit of execution}
-        \item A task can \textbf{only be blocked once} during its execution
-        \item Tasks share a \textbf{single stack} - \emph{very memory efficient}
-        \item Works with both \textbf{fixed} and dynamic priorities
-    \end{itemize-size}
+    \begin{columns}
+        \column{0.5\textwidth} 
+        \begin{itemize-size}{1em}
+            \item Defines a way for \textbf{sharing resources} in a real-time system
+            \item \textbf{Prevents deadlocks}
+            \item \textbf{Task} as a \emph{unit of execution}
+            \item A task can \textbf{only be blocked once} during its execution
+            \item Tasks share a \textbf{single stack} - \emph{very memory efficient}
+            \item Works with both \textbf{fixed} and dynamic priorities
+        \end{itemize-size}
+
+        \column{0.5\textwidth} 
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.15]{pictures/ram.jpg}
+        \end{figure}
+    \end{columns}
 \end{frame}
 
 
@@ -188,9 +197,9 @@
             \begin{itemize-size}{1em}
                 \item E.g. fuzz testing works on concrete values
             \end{itemize-size}
-        \item \textbf{Explores paths in the program to find errors}
+        \item \textbf{Explores paths using the symbolic values in the program
+            to find errors}
         \item \textbf{Each path will generate a concrete test vector}
-        \item \textbf{Path explosion problem!}
         \end{itemize-size}
 
         \column{0.55\textwidth}

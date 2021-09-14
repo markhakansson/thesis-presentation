@@ -9,20 +9,37 @@
     \end{itemize-size}     
 \end{frame}
 
-\begin{frame}{Implementation}
-    \begin{block}{Generate test vectors}
-        \begin{itemize-size}{1em}
-            \item We build the RTIC application such that KLEE can run on it
-            \item \textbf{IN THEORY:} We can generate test vectors targeting all possible
-            execution paths on the user tasks. By setting the resources used by a task
-            are set as symbolic values and run KLEE.
-            \item \textbf{ASSUMPTION:} At least one test vector generated for a task, should
-            result in the WCET of that task!
-        \end{itemize-size}  
-    \end{block}
+\begin{frame}{Implementation - Execution flow}
+    \begin{itemize-size}{1em}
+        \item Generate test vectors
+        \item Replay and measure test vectors on hardware
+        \item Calculate and determine if system is schedulable
+    \end{itemize-size}
+    
 \end{frame}
 
-\begin{frame}{Implementation}
+\begin{frame}{Implementation - Generating tests}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{block}{Generate test vectors}
+            \begin{itemize-size}{1em}
+                \item We build the RTIC application such that KLEE can run on it
+                \item Generate tests targeting all possible execution paths using KLEE
+                \item Task resources as symbolic values
+                \item \textbf{ASSUMPTION:} At least one test vector generated for a task, should
+                result in the WCET of that task!
+            \end{itemize-size}  
+        \end{block}
+
+        \column{0.5\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.3]{pictures/softwaretesting.jpg}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Implementation - Measure tests}
     \begin{block}{Replay the test vectors}
         \begin{itemize-size}{1em}
             \item Build the application such that we can test it on the target hardware
@@ -38,19 +55,28 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{Implementation}
-    \begin{block}{Replay the test vectors (contd.)}
-        \begin{itemize-size}{1em}
-            \item For each test vector, when hitting a breakpoint we record
+\begin{frame}{Implementation - Measure tests}
+    \begin{columns}
+        \column{0.5\textwidth} 
+        \begin{block}{Replay the test vectors (contd.)}
             \begin{itemize-size}{1em}
-                \item Current clock cycle
-                \item What task is starting/ending or
-                \item Which resource is claimed or released
-            \end{itemize-size}
-            \item Finally we end up with a trace for that test vector
-            \item Repeat until all test vectors have been executed
-        \end{itemize-size}  
-    \end{block}
+                \item For each test vector, when hitting a breakpoint we record
+                \begin{itemize-size}{1em}
+                    \item Current clock cycle
+                    \item What task is starting/ending or
+                    \item Which resource is claimed or released
+                \end{itemize-size}
+                \item Finally we end up with a trace for that test vector
+                \item Repeat until all test vectors have been measured 
+            \end{itemize-size}  
+        \end{block}
+
+        \column{0.5\textwidth} 
+        \begin{figure}
+           \centering
+            \includegraphics[scale=0.15]{pictures/stopwatch.jpg}
+        \end{figure}
+    \end{columns}
 \end{frame}
 
 
@@ -86,7 +112,8 @@
             run a schedulability analysis check without compiler optimizations
             \item RAUK has some limitations when running with compiler optimizations
             enabled
-            \item RAUK adds some overhead to each trace measured with and without
+            \item Result compared with manual tracing of the test vectors
+            \item RAUK adds some overhead to each measurement with and without
             optimizations
         \end{itemize-size}
     \end{block}
